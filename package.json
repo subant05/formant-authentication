@@ -1,0 +1,18 @@
+{
+  "name": "formant-authentication",
+  "version": "1.0.8",
+  "description": "Authentication utilities to connect to Formant REST API",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Anthony Crawford",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "moment": "^2.29.4",
+    "node-fetch": "^3.3.0",
+    "process": "^0.11.10"
+  }
+}
