@@ -17,29 +17,55 @@ const requestTokens = async () => {
           "Content-Type":"application/json"
       }
       
-  })
+  });
 
-  const credentials =  await response.json()
+  const credentials =  await response.json();
   process.env['FORMANT_REFRESH_TOKEN'] = credentials.authentication.refreshToken;
   process.env['FORMANT_REFRESH_TOKEN_EXPIRATION'] = moment().add(604800,"s").utc().valueOf();
 
-  return true
+  return true;
 
 }
 
-const refreshToken = async ()=>{
+const connect = async ()=>{
+    let success = false;
+
     try{
-        console.log(moment().utc().valueOf() < process.env['FORMANT_REFRESH_TOKEN_EXPIRATION'])
-        if(moment().utc().valueOf() < process.env['FORMANT_REFRESH_TOKEN_EXPIRATION'])
-            return {success:true}
+        if(moment().utc().valueOf() < process.env['FORMANT_REFRESH_TOKEN_EXPIRATION']){
+            success = true;
 
-       const success = await requestTokens()
+        } else {
+            success = await requestTokens();
 
-       return {success, error:null}
-
+        }
     } catch(e){
-        return {success:false, error:e}
+        console.log("MODULE: formant-authentication message: ", e.message);
+        console.log("MODULE: formant-authentication stack: ", e.stack);
+
+        success = false;
+
+    } finally {
+        return success;
     }
 }
 
-export {refreshToken}
+const expressModule  = async (req, res, next) => {
+    try {
+        const connected = await connect();
+
+        if (!connected){
+                res.status(401);
+                res.send(`401 Unauthorized: Unable to log into Formant.`);
+        } else
+            next();
+
+    } catch (e) {
+        console.log("MODULE: formant-authentication message: ", e.message);
+        console.log("MODULE: formant-authentication stack: ", e.stack);
+
+        res.status(503);
+        res.send(`503 Server Error.`);
+    }
+}
+
+export {connect, expressModule}

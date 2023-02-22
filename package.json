@@ -1,12 +1,22 @@
 {
   "name": "formant-authentication",
-  "version": "1.0.8",
+  "version": "1.1.0",
   "description": "Authentication utilities to connect to Formant REST API",
   "main": "index.js",
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/subant05/formant-authentication.git"
+  },
+  "keywords": [
+    "formant",
+    "authentication",
+    "token",
+    "request"
+  ],
   "author": "Anthony Crawford",
   "license": "ISC",
   "dependencies": {

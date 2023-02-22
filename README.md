@@ -10,7 +10,12 @@
 - FORMANT_REFRESH_TOKEN=
 - FORMANT_REFRESH_TOKEN_EXPIRATION=0
 
-## Use 
-- import * as FormantAuth from 'formant-authentication'
-- await FormantAuth.refreshToken()
+## Use: connected()
+- import * as FormantAuth from "formant-authentication"
+- const connected = await FormantAuth.connect()
 
+## Use: expressModule()
+- import express from "express";
+- import * as FormantAuth from "formant-authentication"
+- const router = express.Router();
+- router.use(FormantAuth.expressModule);
